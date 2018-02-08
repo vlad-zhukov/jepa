@@ -1,0 +1,70 @@
+{
+  "name": "jepa",
+  "version": "0.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/vlad-zhukov/jepa.git",
+  "author": "Vlad Zhukov <work4vlad@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "bin": {
+    "jepa": "./bin/jepa.js"
+  },
+  "scripts": {
+    "lint": "eslint \"**/*.js\"",
+    "prettier": "prettier-eslint \"**/*.{js,md}\" --write"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-helmet": "^5.0.0",
+    "react-router-dom": "^4.0.0"
+  },
+  "dependencies": {
+    "@babel/core": "^7.0.0-beta.39",
+    "@babel/polyfill": "^7.0.0-beta.39",
+    "@babel/preset-env": "^7.0.0-beta.39",
+    "@babel/preset-react": "^7.0.0-beta.39",
+    "@babel/preset-stage-1": "^7.0.0-beta.39",
+    "@babel/register": "^7.0.0-beta.39",
+    "@webpack-blocks/dev-server": "^1.0.0-rc",
+    "@webpack-blocks/uglify": "^1.1.0",
+    "@webpack-blocks/webpack": "^1.0.0-rc",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.13",
+    "body-parser": "^1.18.2",
+    "chalk": "^2.3.0",
+    "circular-dependency-plugin": "^4.4.0",
+    "compression": "^1.7.1",
+    "copy-webpack-plugin": "^4.4.0",
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "helmet": "^3.10.0",
+    "http-proxy-middleware": "^0.17.4",
+    "morgan": "^1.9.0",
+    "prop-types": "^15.6.0",
+    "raf": "^3.4.0",
+    "react-dev-utils": "^5.0.0",
+    "react-loadable": "^5.3.1",
+    "serve-favicon": "^2.4.5",
+    "webpack-blocks-more": "^0.0.10",
+    "webpack-dev-server": "^2.11.1",
+    "webpack-stats-plugin": "^0.1.5",
+    "webpack-universal-helpers": "^0.0.9"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-react": "^7.6.0",
+    "prettier-eslint-cli": "^4.7.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-helmet": "^5.2.0",
+    "react-router-dom": "^4.2.2",
+    "webpack": "^3.10.0"
+  }
+}
