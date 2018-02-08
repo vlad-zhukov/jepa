@@ -1,7 +1,7 @@
 import 'raf/polyfill';
 import dotenv from 'dotenv';
 import {Router} from 'express';
-import JepaApp from './JepaApp';
+import JepaApp from './src/server/JepaApp';
 
 const env = dotenv.config();
 

@@ -1,7 +1,7 @@
-import path from 'path';
+import getConfig from './getConfig'
 
 export default async ({target, env}) => {
-    const modifyWebpack = await (await import('./getConfig.js')).default;
+    const {modifyWebpack} = await getConfig();
 
     if (target === 'node') {
         if (env === 'dev') {

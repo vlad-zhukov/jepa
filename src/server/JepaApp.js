@@ -45,7 +45,7 @@ export default class JepaApp {
         routes(this.app);
         renderApp(this.app);
 
-        this.app.listen(options.host, options.port, (err) => {
+        this.app.listen(options.port, options.host, (err) => {
             if (err) {
                 console.error(err);
             }

@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom/server';
 import {StaticRouter} from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Helmet from 'react-helmet';
-import renderServerWrapper from 'app/server/renderServerWrapper';
-import renderRoot from 'app/universal/index';
 import Html from './Html';
 import getOptions from '../getOptions';
 
@@ -12,8 +10,8 @@ function helmetToString(value) {
     return value.toString().replace(/data-react-helmet="true" /g, '');
 }
 
-function renderDocument({config, renderedCore = '', style = '', stylePaths = [], script = '', scriptPaths = []}) {
-    ReactDOM.renderToStaticMarkup(<Html config={config} styles={stylePaths} scripts={scriptPaths} />);
+function renderDocument({options, renderedCore = '', style = '', stylePaths = [], script = '', scriptPaths = []}) {
+    ReactDOM.renderToStaticMarkup(<Html options={options} styles={stylePaths} scripts={scriptPaths} />);
     const helmet = Helmet.renderStatic();
 
     const head = helmet.title.toString() + helmetToString(helmet.meta) + helmetToString(helmet.link) + style;
@@ -28,6 +26,8 @@ export default async function render(locals) {
     const options = await getOptions();
 
     if (!__DEV__) {
+        const renderServerWrapper = await import('app/server/renderServerWrapper');
+        const renderRoot = await import('app/universal/index');
         const meta = await import('.jepa/prod/meta.json');
         const stats = await import('.jepa/prod/react-loadable.json');
 
@@ -49,9 +49,9 @@ export default async function render(locals) {
         const scriptPaths = [...meta.vendor, ...chunkScripts, ...meta.app.filter(file => file.endsWith('.js'))];
         const stylePaths = meta.app.filter(file => file.endsWith('.css'));
 
-        return renderDocument({config: options, renderedCore, style, stylePaths, script, scriptPaths});
+        return renderDocument({options, renderedCore, style, stylePaths, script, scriptPaths});
     }
 
     const scriptPaths = ['js/vendor.js', 'js/app.js'];
-    return renderDocument({config: options, scriptPaths});
+    return renderDocument({options, scriptPaths});
 }

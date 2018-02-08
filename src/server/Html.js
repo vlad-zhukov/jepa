@@ -4,13 +4,13 @@ import Helmet from 'react-helmet';
 
 const prefix = __DEV__ ? '/build/' : '/';
 
-const Html = ({config, styles, scripts}) => (
+const Html = ({options, styles, scripts}) => (
     <Helmet>
         <html lang="ru" />
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {config.manifestJson && (
+        {options.manifestJson && (
             <link rel="manifest" type="application/manifest+json" href="/manifest.json" />
         )}
         {styles.map(style => <link rel="stylesheet" type="text/css" href={`${prefix}${style}`} key={style} />)}
@@ -19,6 +19,7 @@ const Html = ({config, styles, scripts}) => (
 );
 
 Html.propTypes = {
+    options: PropTypes.object().isRequired,
     styles: PropTypes.arrayOf(PropTypes.string).isRequired,
     scripts: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
