@@ -16,21 +16,17 @@ export default async function () {
     if (options === null) {
         let jepaOptions;
 
-        if (typeof __webpack_require__ !== "undefined") {
+        // eslint-disable-next-line camelcase
+        if (typeof __webpack_require__ !== 'undefined') {
             jepaOptions = (await import('app/jepa.options.js')).default;
         }
         else {
             const path = await import('path');
-            jepaOptions = (await import(path.resolve(process.cwd(), './app/jepa.options.js'))).default
+            jepaOptions = (await import(path.resolve(process.cwd(), './app/jepa.options.js'))).default;
         }
 
-        options = _.merge(
-            {},
-            defaultOptions,
-            jepaOptions,
-            envOptions,
-        )
+        options = _.merge({}, defaultOptions, jepaOptions, envOptions);
     }
 
     return options;
-};
+}

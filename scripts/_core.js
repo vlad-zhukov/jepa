@@ -18,7 +18,7 @@ function getInstallOptions(packageManager) {
 
 export async function installDeps() {
     if (await fs.pathExists('app/.env')) {
-        fs.copy('app/.env', `${outDir}/.env`)
+        fs.copy('app/.env', `${outDir}/.env`);
     }
 
     if (await fs.pathExists('app/package.json')) {
@@ -28,7 +28,7 @@ export async function installDeps() {
         const usingNpm = await fs.pathExists('app/package-lock.json');
 
         if (usingYarn && usingNpm) {
-            throw new Error(`It looks like you've got both 'package-lock.json' and 'yarn.lock' in the 'app/' folder.`);
+            throw new Error("It looks like you've got both 'package-lock.json' and 'yarn.lock' in the 'app/' folder.");
         }
 
         const packageManager = usingYarn ? 'yarn' : 'npm';

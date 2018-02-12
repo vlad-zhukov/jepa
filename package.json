@@ -1,17 +1,17 @@
 {
   "name": "jepa",
   "version": "0.0.0",
-  "main": "index.js",
   "repository": "https://github.com/vlad-zhukov/jepa.git",
   "author": "Vlad Zhukov <work4vlad@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "main": "./server.js",
   "bin": {
     "jepa": "./bin/jepa.js"
   },
   "scripts": {
     "lint": "eslint \"**/*.js\"",
-    "prettier": "prettier-eslint \"**/*.{js,md}\" --write"
+    "prettier": "prettier-eslint \"**/*.{js,md}\" --write",
+    "prepublishOnly": "yarn lint"
   },
   "peerDependencies": {
     "react": "^16.0.0",
@@ -57,6 +57,7 @@
     "webpack-universal-helpers": "^0.0.10"
   },
   "devDependencies": {
+    "babel-eslint": "^8.2.1",
     "eslint": "^4.17.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
@@ -67,5 +68,14 @@
     "prettier-eslint-cli": "^4.7.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
-  }
+  },
+  "files": [
+    "app/",
+    "bin/",
+    "config/",
+    "scripts/",
+    "src/",
+    "asyncComponent.js",
+    "server.js"
+  ]
 }

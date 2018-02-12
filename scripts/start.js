@@ -23,15 +23,11 @@ async function start() {
     const clientCompiler = webpack(clientConfig);
     const clientDevServer = new DevServer(clientCompiler, clientConfig.devServer);
 
-    const server = clientDevServer.listen(
-        options.clientDevServerPort,
-        options.host,
-        (error) => {
-            if (error) {
-                console.error(error);
-            }
+    const server = clientDevServer.listen(options.clientDevServerPort, options.host, (error) => {
+        if (error) {
+            console.error(error);
         }
-    );
+    });
 
     ['SIGINT', 'SIGTERM'].forEach((sig) => {
         process.on(sig, () => {
@@ -42,7 +38,7 @@ async function start() {
     });
 }
 
-start().catch((err) => {
-    console.error(err);
+start().catch((error) => {
+    console.error(error);
     process.exitCode = 1;
 });

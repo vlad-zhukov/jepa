@@ -8,7 +8,7 @@ import serveFavicon from './middleware/serveFavicon';
 import robotsTxt from './middleware/robotsTxt';
 import manifestJson from './middleware/manifestJson';
 import renderApp from './middleware/renderApp';
-import getOptions from '../getOptions'
+import getOptions from '../getOptions';
 
 export default async function createJepaApp() {
     // init
@@ -49,9 +49,9 @@ export default async function createJepaApp() {
 
     renderApp(app);
 
-    app.listen(options.port, options.host, (err) => {
-        if (err) {
-            console.error(err);
+    app.listen(options.port, options.host, (error) => {
+        if (error) {
+            console.error(error);
         }
         else {
             const msg = ` ${options.name} on ${options.port} `;

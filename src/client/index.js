@@ -8,7 +8,11 @@ const renderOrHydrate = __DEV__ ? ReactDOM.render : ReactDOM.hydrate;
 
 function renderApp() {
     renderOrHydrate(
-        renderClientWrapper(<BrowserRouter><App /></BrowserRouter>),
+        renderClientWrapper(
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        ),
         document.getElementById('react-app')
     );
 }

@@ -6,11 +6,11 @@ A ~~highly~~ customizable React framework for painless SPAs.
 
 * [Getting Started](#getting-started)
 * [Customization](#customization)
-  * [Files](#files)
-  * [`jepa.options.js`](#jepaoptionsjs)
-  * [Environment Variables](#environment-variables)
-  * [`jepa.config.js`](#jepaconfigjs)
-  * [Runtime Dependencies](#runtime-dependencies)
+    * [Files](#files)
+    * [`jepa.options.js`](#jepaoptionsjs)
+    * [Environment Variables](#environment-variables)
+    * [`jepa.config.js`](#jepaconfigjs)
+    * [Runtime Dependencies](#runtime-dependencies)
 
 ## Getting Started
 
@@ -28,22 +28,24 @@ You can optionally replace the following files:
 
 * `app/server/index.js`: The server entrypoint.
 * `app/server/renderServerWrapper.js`: A function that takes a
-`React.Component` and return an object of shape:
-  ```
-  {
-    renderedRoot: React.Component,
+  `React.Component` and return an object of shape:
 
-    // HTML string that will be placed after other styles in the head.
-    style: String,
+    ```
+    {
+      renderedRoot: React.Component,
 
-    // HTML string that will be placed before other scripts in the end
-    // of the body, useful for providing SSRed stores, for example
-    // Redux or Apollo stores.
-    script: String
-  }
-  ```
+      // HTML string that will be placed after other styles in the head.
+      style: String,
+
+      // HTML string that will be placed before other scripts in the end
+      // of the body, useful for providing SSRed stores, for example
+      // Redux or Apollo stores.
+      script: String
+    }
+    ```
+
 * `app/client/renderClientWrapper.js`: A function that takes a
-`React.Component` and returns a React component.
+  `React.Component` and returns a React component.
 * `app/universal/Root.js`: The root of the universal app.
 
 ### `jepa.options.js`
@@ -53,10 +55,10 @@ You can optionally replace the following files:
 * `port` _(Number)_: Defaults to `3000`.
 * `clientDevServerPort` _(Number)_: Default to `3001`.
 * `routes` _(AsyncFunction)_: An async function that returns a function
-that takes an `express` instance as argument.
+  that takes an `express` instance as argument.
 * `compress` _(Boolean|Object)_: Set this to `true` or object with
-[`compression`](https://github.com/expressjs/compression) options
-to enable HTTP compression. Defaults to `!__DEV__`.
+  [`compression`](https://github.com/expressjs/compression) options
+  to enable HTTP compression. Defaults to `!__DEV__`.
 * `favicon`
 * `robotsTxt` _(String)_
 * `manifestJson` _(Object)_
@@ -77,14 +79,15 @@ Environmental variables can be used to override options that were set in
 `app/` folder.
 
 The following variables are currently supported:
+
 * `process.env.HOST`
 * `process.env.PORT`
 
 ### `jepa.config.js`
 
 * `webpackModify` _(AsyncFunction)_: A function that takes an object
-argument of shape `{webpackConfig, target: 'web' || 'node', env: 'dev' || 'prod'}`,
-and should return a webpack config object.
+  argument of shape `{webpackConfig, target: 'web' || 'node', env: 'dev' || 'prod'}`,
+  and should return a webpack config object.
 * `postcss` _(Object)_: [`postcss-loader`](https://github.com/postcss/postcss-loader) options.
 
 ### Runtime Dependencies

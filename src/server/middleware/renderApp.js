@@ -8,7 +8,10 @@ export default function renderApp(app) {
         try {
             // Render the view
             const result = await render(res.locals);
-            res.type('html').status(200).send(result);
+            res
+                .type('html')
+                .status(200)
+                .send(result);
         }
         catch (e) {
             console.error(e);

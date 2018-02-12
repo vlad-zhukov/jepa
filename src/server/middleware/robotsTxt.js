@@ -1,4 +1,4 @@
-import getOptions from '../../getOptions'
+import getOptions from '../../getOptions';
 
 export default async function robotsTxt(app) {
     const options = await getOptions();
