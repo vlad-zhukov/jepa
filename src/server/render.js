@@ -26,8 +26,8 @@ export default async function render(locals) {
     const options = await getOptions();
 
     if (!__DEV__) {
-        const renderServerWrapper = (await import('app/server/renderServerWrapper')).default;
-        const App = (await import('app/universal/App')).default;
+        const renderServerWrapper = (await import('src/server/renderServerWrapper')).default;
+        const App = (await import('src/universal/App')).default;
         const meta = await import('.jepa/prod/meta.json');
         const stats = await import('.jepa/prod/react-loadable.json');
 

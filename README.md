@@ -26,8 +26,8 @@ npm install --save jepa react react-dom
 
 You can optionally replace the following files:
 
-* `app/server/index.js`: The server entrypoint.
-* `app/server/renderServerWrapper.js`: A function that takes a
+* `src/server/index.js`: The server entrypoint.
+* `src/server/renderServerWrapper.js`: A function that takes a
   `React.Component` and return an object of shape:
 
     ```
@@ -44,9 +44,9 @@ You can optionally replace the following files:
     }
     ```
 
-* `app/client/renderClientWrapper.js`: A function that takes a
+* `src/client/renderClientWrapper.js`: A function that takes a
   `React.Component` and returns a React component.
-* `app/universal/Root.js`: The root of the universal app.
+* `src/universal/Root.js`: The root of the universal app.
 
 ### `jepa.options.js`
 
@@ -76,7 +76,7 @@ TODO:
 
 Environmental variables can be used to override options that were set in
 `jepa.options.js` during startup time. You can place a `.env` file in
-`app/` folder.
+`src/` folder.
 
 The following variables are currently supported:
 

@@ -8,7 +8,7 @@ let config = null;
 
 export default async function () {
     if (config === null) {
-        const jepaConfig = (await import(path.resolve(process.cwd(), './app/jepa.config.js'))).default;
+        const jepaConfig = (await import(path.resolve(process.cwd(), './src/jepa.config.js'))).default;
 
         config = _.merge(
             {},

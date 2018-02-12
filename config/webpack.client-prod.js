@@ -113,7 +113,7 @@ export default async () => {
         addPlugins([
             new CopyPlugin([{
                 context,
-                from: './app/client/static/',
+                from: './src/client/static/',
                 to: './static/',
             }]),
 

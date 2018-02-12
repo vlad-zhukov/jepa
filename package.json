@@ -1,6 +1,6 @@
 {
   "name": "jepa",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "repository": "https://github.com/vlad-zhukov/jepa.git",
   "author": "Vlad Zhukov <work4vlad@gmail.com>",
   "license": "MIT",
@@ -70,7 +70,6 @@
     "react-dom": "^16.2.0"
   },
   "files": [
-    "app/",
     "bin/",
     "config/",
     "scripts/",

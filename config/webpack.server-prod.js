@@ -24,7 +24,7 @@ export default async () => {
     const jepaRoot = path.resolve(__dirname, '..');
     const config = await getConfig();
 
-    const pathToPackageJson = path.resolve(context, 'app/package.json');
+    const pathToPackageJson = path.resolve(context, 'src/package.json');
     const hasPackageJson = await fs.pathExists(pathToPackageJson);
     const externals = hasPackageJson ? [nodeExternals({pathToPackageJson})] : [];
 
@@ -37,7 +37,7 @@ export default async () => {
         }),
 
         entryPoint({
-            app: './app/server/index.js',
+            app: './src/server/index.js',
         }),
 
         setOutput({
