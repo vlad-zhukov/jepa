@@ -11,15 +11,20 @@ import {
     resolve,
 } from '@webpack-blocks/webpack';
 import uglify from '@webpack-blocks/uglify';
-import {parser, babel, thread} from 'webpack-blocks-more';
+import {css} from '@webpack-blocks/assets';
+import {parser, babel, thread, postcss} from 'webpack-blocks-more';
+import extractText from '@webpack-blocks/extract-text';
 import CopyPlugin from 'copy-webpack-plugin';
 import {StatsWriterPlugin} from 'webpack-stats-plugin';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import ReactLoadablePlugin from './reactLoadableWebpack';
 import babelConfig from './babelConfig';
+import getConfig from './getConfig';
 
 export default async () => {
     const context = process.cwd();
+    const jepaRoot = path.resolve(__dirname, '..');
+    const config = await getConfig();
 
     return createConfig([
         defineConstants({
@@ -34,8 +39,9 @@ export default async () => {
                 '@babel/polyfill',
                 'react',
                 'react-dom',
-                'react-redux',
-                'redux',
+                'react-helmet',
+                'react-router',
+                'react-router-dom',
             ],
             app: 'jepa/src/client/index.js',
         }),
@@ -57,7 +63,7 @@ export default async () => {
 
         resolve({
             mainFields: ['module', 'jsnext:main', 'main'],
-            modules: [context, "node_modules"],
+            modules: [context, jepaRoot, "node_modules"],
         }),
 
         parser({
@@ -77,6 +83,15 @@ export default async () => {
                 compact: false,
             }),
         ]),
+
+        match('*.css', [
+            css({
+                styleLoader: false,
+                minimize: true,
+            }),
+            config.postcss && postcss(config.postcss),
+            extractText({filename: 'static/css/[contenthash:20].css', allChunks: true, ignoreOrder: true}),
+        ].filter(Boolean)),
 
         uglify({
             uglifyOptions: {

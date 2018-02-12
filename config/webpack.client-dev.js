@@ -1,3 +1,4 @@
+import path from 'path';
 import webpack from 'webpack';
 import {
     createConfig,
@@ -10,13 +11,17 @@ import {
     resolve,
 } from '@webpack-blocks/webpack';
 import devServer from '@webpack-blocks/dev-server';
-import {parser, babel, thread} from 'webpack-blocks-more';
+import {css} from '@webpack-blocks/assets';
+import {parser, babel, postcss} from 'webpack-blocks-more';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import babelConfig from './babelConfig';
+import getConfig from './getConfig';
 import getOptions from '../src/getOptions';
 
 export default async () => {
     const context = process.cwd();
+    const jepaRoot = path.resolve(__dirname, '..');
+    const config = await getConfig();
     const options = await getOptions();
 
     return createConfig([
@@ -32,8 +37,9 @@ export default async () => {
                 '@babel/polyfill',
                 'react',
                 'react-dom',
-                'react-redux',
-                'redux',
+                'react-helmet',
+                'react-router',
+                'react-router-dom',
             ],
             app: [
                 'jepa/src/client/index.js',
@@ -60,7 +66,7 @@ export default async () => {
         resolve({
             mainFields: ['module', 'jsnext:main', 'main'],
             // mainFields: ['module', 'jsnext:main', 'browser', 'main'],
-            modules: [context, "node_modules"],
+            modules: [context, jepaRoot, "node_modules"],
         }),
 
         parser({
@@ -73,9 +79,10 @@ export default async () => {
         }),
 
         match(['*.js', '*.mjs'], [
-            thread(),
             babel({...babelConfig('development'), cacheDirectory: true}),
         ]),
+
+        match('*.css', [css(), config.postcss && postcss(config.postcss)].filter(Boolean)),
 
         devServer({
             publicPath: '/build/',

@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs-extra';
 import {
     createConfig,
     entryPoint,
@@ -9,13 +10,18 @@ import {
     match,
     resolve,
 } from '@webpack-blocks/webpack';
-import {parser, babel, thread} from 'webpack-blocks-more';
+import {parser, babel} from 'webpack-blocks-more';
 import {nodeExternals} from 'webpack-universal-helpers';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import babelConfig from './babelConfig';
 
 export default async () => {
     const context = process.cwd();
+    const jepaRoot = path.resolve(__dirname, '..');
+
+    const pathToPackageJson = path.resolve(context, 'app/package.json');
+    const hasPackageJson = await fs.pathExists(pathToPackageJson);
+    const externals = hasPackageJson ? [nodeExternals({pathToPackageJson})] : [];
 
     return createConfig([
         defineConstants({
@@ -26,7 +32,7 @@ export default async () => {
         }),
 
         entryPoint({
-            app: './app/server/index.js',
+            app: 'app/server/index.js',
         }),
 
         setOutput({
@@ -42,16 +48,12 @@ export default async () => {
             module: {
                 strictExportPresence: true,
             },
-            externals: [
-                nodeExternals({
-                    pathToPackageJson: path.resolve(context, 'app/package.json'),
-                }),
-            ],
+            externals,
         }),
 
         resolve({
             mainFields: ['module', 'jsnext:main', 'main'],
-            modules: [context, "node_modules"],
+            modules: [context, jepaRoot, "node_modules"],
         }),
 
         parser({
@@ -64,7 +66,6 @@ export default async () => {
         }),
 
         match(['*.js', '*.mjs'], [
-            thread(),
             babel({...babelConfig('server'), cacheDirectory: true}),
         ]),
 

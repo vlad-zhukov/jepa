@@ -1,7 +1,7 @@
 import 'raf/polyfill';
 import dotenv from 'dotenv';
 import {Router} from 'express';
-import JepaApp from './src/server/JepaApp';
+import createJepaApp from './src/server/createJepaApp';
 
 const env = dotenv.config();
 
@@ -18,12 +18,11 @@ let currentApp = null;
 export default async function jepa() {
     if (!currentApp) {
         try {
-            currentApp = new JepaApp();
-            await currentApp.init();
-            await currentApp.start();
+            currentApp = await createJepaApp();
         }
         catch (err) {
             console.error(err);
+            throw err;
         }
     }
 

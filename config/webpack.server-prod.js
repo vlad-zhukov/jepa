@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs-extra';
 import {
     createConfig,
     entryPoint,
@@ -10,13 +11,22 @@ import {
     resolve,
 } from '@webpack-blocks/webpack';
 import uglify from '@webpack-blocks/uglify';
-import {parser, babel, thread} from 'webpack-blocks-more';
+import {css} from '@webpack-blocks/assets';
+import {parser, babel, thread, postcss} from 'webpack-blocks-more';
+import extractText from '@webpack-blocks/extract-text';
 import {nodeExternals} from 'webpack-universal-helpers';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import babelConfig from './babelConfig';
+import getConfig from './getConfig';
 
 export default async () => {
     const context = process.cwd();
+    const jepaRoot = path.resolve(__dirname, '..');
+    const config = await getConfig();
+
+    const pathToPackageJson = path.resolve(context, 'app/package.json');
+    const hasPackageJson = await fs.pathExists(pathToPackageJson);
+    const externals = hasPackageJson ? [nodeExternals({pathToPackageJson})] : [];
 
     return createConfig([
         defineConstants({
@@ -42,16 +52,12 @@ export default async () => {
             module: {
                 strictExportPresence: true,
             },
-            externals: [
-                nodeExternals({
-                    pathToPackageJson: path.resolve(context, 'app/package.json'),
-                }),
-            ],
+            externals,
         }),
 
         resolve({
             mainFields: ['module', 'jsnext:main', 'main'],
-            modules: [context, "node_modules"],
+            modules: [context, jepaRoot, "node_modules"],
         }),
 
         parser({
@@ -71,6 +77,20 @@ export default async () => {
                 compact: false,
             }),
         ]),
+
+        match('*.css', [
+            css({
+                styleLoader: false,
+                minimize: true,
+            }),
+            config.postcss && postcss(config.postcss),
+            extractText({
+                filename: 'static/css/[contenthash:20].css',
+                allChunks: true,
+                ignoreOrder: true,
+                disable: true,
+            }),
+        ].filter(Boolean)),
 
         uglify({
             uglifyOptions: {

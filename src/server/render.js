@@ -26,8 +26,8 @@ export default async function render(locals) {
     const options = await getOptions();
 
     if (!__DEV__) {
-        const renderServerWrapper = await import('app/server/renderServerWrapper');
-        const renderRoot = await import('app/universal/index');
+        const renderServerWrapper = (await import('app/server/renderServerWrapper')).default;
+        const App = (await import('app/universal/App')).default;
         const meta = await import('.jepa/prod/meta.json');
         const stats = await import('.jepa/prod/react-loadable.json');
 
@@ -41,7 +41,7 @@ export default async function render(locals) {
 
         const {renderedCore, style, script} = renderServerWrapper(
             <StaticRouter location={locals.location} context={{}}>
-                <Loadable.Capture report={moduleName => modules.push(moduleName)}>{renderRoot()}</Loadable.Capture>
+                <Loadable.Capture report={moduleName => modules.push(moduleName)}><App/></Loadable.Capture>
             </StaticRouter>
         );
 

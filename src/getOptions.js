@@ -3,6 +3,7 @@ import _ from 'lodash';
 const defaultOptions = {
     host: 'localhost',
     port: 3000,
+    clientDevServerPort: 3001,
     compress: !__DEV__,
 };
 const envOptions = {
