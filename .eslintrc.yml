@@ -1,6 +1,6 @@
 parser: babel-eslint
 
-extends: [airbnb, plugin:promise/recommended]
+extends: [airbnb, plugin:promise/recommended, plugin:jest/recommended]
 
 plugins: [promise, jest]
 
@@ -40,8 +40,3 @@ rules:
 
     promise/prefer-await-to-then: warn
     promise/prefer-await-to-callbacks: error
-
-    jest/no-disabled-tests: warn
-    jest/no-focused-tests: error
-    jest/no-identical-title: error
-    jest/valid-expect: error

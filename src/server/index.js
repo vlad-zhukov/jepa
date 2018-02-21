@@ -1,3 +1,3 @@
-import jepa from '../../server';
+import jepa from './server';
 
 jepa();

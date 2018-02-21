@@ -1,16 +1,6 @@
 # jepa · [![npm](https://img.shields.io/npm/v/jepa.svg)](https://npm.im/jepa)
 
-A ~~highly~~ customizable React framework for painless SPAs.
-
-## Table of Contents
-
-* [Getting Started](#getting-started)
-* [Customization](#customization)
-    * [Files](#files)
-    * [`jepa.options.js`](#jepaoptionsjs)
-    * [Environment Variables](#environment-variables)
-    * [`jepa.config.js`](#jepaconfigjs)
-    * [Runtime Dependencies](#runtime-dependencies)
+> A ~~highly~~ customizable React framework for painless SPAs.
 
 ## Getting Started
 
@@ -19,6 +9,15 @@ yarn add jepa react react-dom
   # or
 npm install --save jepa react react-dom
 ```
+
+## Table of Contents
+
+* [Customization](#customization)
+    * [Files](#files)
+    * [`jepa.options.js`](#jepaoptionsjs)
+    * [Environment Variables](#environment-variables)
+    * [`jepa.config.js`](#jepaconfigjs)
+    * [Runtime Dependencies](#runtime-dependencies)
 
 ## Customization
 
