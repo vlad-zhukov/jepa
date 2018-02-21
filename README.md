@@ -51,7 +51,7 @@ You can optionally replace the following files:
 ### `jepa.options.js`
 
 * `name` _(String)_: The name of the project.
-* `host` _(String)_: Defaults to `localhost`.
+* `host` _(String)_: Defaults to `0.0.0.0`.
 * `port` _(Number)_: Defaults to `3000`.
 * `clientDevServerPort` _(Number)_: Default to `3001`.
 * `routes` _(AsyncFunction)_: An async function that returns a function
