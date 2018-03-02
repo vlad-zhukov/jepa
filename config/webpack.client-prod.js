@@ -90,7 +90,7 @@ export default async () => {
                 minimize: true,
             }),
             config.postcss && postcss(config.postcss),
-            extractText({filename: 'static/css/[contenthash:20].css', allChunks: true, ignoreOrder: true}),
+            extractText({filename: 'static/css/[contenthash:20].css', allChunks: true, ignoreOrder: true, publicPath: 'static/css/'}),
         ].filter(Boolean)),
 
         uglify({
