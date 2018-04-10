@@ -52,7 +52,10 @@ You can optionally replace the following files:
 *   `name` _(String)_: The name of the project.
 *   `host` _(String)_: Defaults to `0.0.0.0`.
 *   `port` _(Number)_: Defaults to `3000`.
-*   `clientDevServerPort` _(Number)_: Default to `3001`.
+*   `clientDevServerPort` _(Number)_: Defaults to `3001`.
+*   `basePath` _(String)_: The base URL for the client. Useful when your
+    app is served from a sub-directory or behind a proxy.
+    Defaults to `/`.
 *   `routes` _(AsyncFunction)_: An async function that returns a function
     that takes an `express` instance as argument.
 *   `compress` _(Boolean|Object)_: Set this to `true` or object with

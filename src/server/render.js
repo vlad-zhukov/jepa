@@ -40,7 +40,7 @@ export default async function render(locals) {
         const modules = [];
 
         const {renderedCore, style, script} = renderServerWrapper(
-            <StaticRouter location={locals.location} context={{}}>
+            <StaticRouter basename={options.basePath} location={locals.location} context={{}}>
                 <Loadable.Capture report={moduleName => modules.push(moduleName)}>
                     <App />
                 </Loadable.Capture>

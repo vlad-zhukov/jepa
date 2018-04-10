@@ -5,6 +5,7 @@ const defaultOptions = {
     port: 3000,
     clientDevServerPort: 3001,
     compress: !__DEV__,
+    basePath: '/',
 };
 let options = null;
 

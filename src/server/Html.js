@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import getOptions from '../getOptions';
 
-const prefix = __DEV__ ? '/build/' : '/';
+const prefix = __DEV__ ? '/build/' : getOptions().basePath;
 
 const Html = ({options, styles, scripts}) => (
     <Helmet>
