@@ -6,10 +6,6 @@ const defaultOptions = {
     clientDevServerPort: 3001,
     compress: !__DEV__,
 };
-const envOptions = {
-    host: process.env.HOST,
-    port: process.env.PORT,
-};
 let options = null;
 
 export default async function () {
@@ -25,7 +21,7 @@ export default async function () {
             jepaOptions = (await import(path.resolve(process.cwd(), './src/jepa.options.js'))).default;
         }
 
-        options = _.merge({}, defaultOptions, jepaOptions, envOptions);
+        options = _.merge({}, defaultOptions, jepaOptions);
     }
 
     return options;
