@@ -21,6 +21,7 @@ const Html = ({options, optionsJson, styles, scripts}) => {
 
 Html.propTypes = {
     options: PropTypes.object().isRequired, // eslint-disable-line react/forbid-prop-types
+    optionsJson: PropTypes.string().isRequired,
     styles: PropTypes.arrayOf(PropTypes.string).isRequired,
     scripts: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

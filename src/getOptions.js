@@ -26,7 +26,7 @@ export default async function getOptions() {
         }
 
         options = _.merge({}, defaultOptions, jepaOptions);
-        optionsJson = devalue(_.pick(opttion, ['basePath']));
+        optionsJson = devalue(_.pick(options, ['basePath']));
     }
 
     return {options, optionsJson};
