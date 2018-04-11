@@ -11,6 +11,8 @@ import renderApp from './middleware/renderApp';
 import getOptions from '../getOptions';
 
 export default async function createJepaApp() {
+    const {options} = await getOptions();
+
     // init
 
     const app = express().disable('x-powered-by');
@@ -39,8 +41,6 @@ export default async function createJepaApp() {
     app.use(bodyParser.urlencoded({extended: true}));
 
     // start
-
-    const {options} = await getOptions();
 
     if (typeof options.routes === 'function') {
         const routes = await options.routes();

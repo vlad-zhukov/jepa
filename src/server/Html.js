@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 
 const Html = ({options, optionsJson, styles, scripts}) => {
     const prefix = __DEV__ ? '/build/' : options.basePath;
+    const jepaOptions = `window.__JEPA_OPTIONS = ${optionsJson};`;
 
     return (
         <Helmet>
@@ -12,7 +13,7 @@ const Html = ({options, optionsJson, styles, scripts}) => {
             <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             {options.manifestJson && <link rel="manifest" type="application/manifest+json" href="/manifest.json" />}
-            <script id="jepa-options">`window.__JEPA_OPTIONS = ${optionsJson};`</script>
+            <script id="jepa-options">{jepaOptions}</script>
             {styles.map(style => <link rel="stylesheet" type="text/css" href={`${prefix}${style}`} key={style} />)}
             {scripts.map(script => <script defer src={`${prefix}${script}`} key={script} />)}
         </Helmet>
