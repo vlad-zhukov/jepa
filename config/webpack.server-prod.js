@@ -37,7 +37,7 @@ export default async () => {
         }),
 
         entryPoint({
-            app: './src/server/index.js',
+            app: 'src/server/index.js',
         }),
 
         setOutput({

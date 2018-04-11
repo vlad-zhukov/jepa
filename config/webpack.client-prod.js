@@ -1,4 +1,5 @@
 import path from 'path';
+import fs from 'fs-extra';
 import webpack from 'webpack';
 import {
     createConfig,
@@ -25,6 +26,7 @@ export default async () => {
     const context = process.cwd();
     const jepaRoot = path.resolve(__dirname, '..');
     const config = await getConfig();
+    const staticDirExists = await fs.pathExists('./src/client/static/');
 
     return createConfig([
         defineConstants({
@@ -111,7 +113,7 @@ export default async () => {
         }),
 
         addPlugins([
-            new CopyPlugin([{
+            staticDirExists && new CopyPlugin([{
                 context,
                 from: './src/client/static/',
                 to: './static/',
@@ -164,6 +166,6 @@ export default async () => {
             }),
 
             new CircularDependencyPlugin({exclude: /node_modules\/(?!jepa).*/}),
-        ]),
+        ].filter(Boolean)),
     ]);
 }
