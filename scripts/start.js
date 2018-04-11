@@ -6,7 +6,7 @@ import webpackConfig from '../config/webpackConfig';
 import getOptions from '../src/getOptions';
 
 async function start() {
-    const options = await getOptions();
+    const {options} = await getOptions();
 
     await cleanDir();
     await installDeps();
@@ -29,7 +29,7 @@ async function start() {
         }
     });
 
-    ['SIGINT', 'SIGTERM'].forEach((sig) => {
+    ['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGQUIT', 'exit', 'uncaughtException'].forEach((sig) => {
         process.on(sig, () => {
             server.close(() => {
                 process.exit();

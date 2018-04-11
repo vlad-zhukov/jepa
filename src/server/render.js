@@ -10,8 +10,18 @@ function helmetToString(value) {
     return value.toString().replace(/data-react-helmet="true" /g, '');
 }
 
-function renderDocument({options, renderedCore = '', style = '', stylePaths = [], script = '', scriptPaths = []}) {
-    ReactDOM.renderToStaticMarkup(<Html options={options} styles={stylePaths} scripts={scriptPaths} />);
+function renderDocument({
+    options,
+    optionsJson,
+    renderedCore = '',
+    style = '',
+    stylePaths = [],
+    script = '',
+    scriptPaths = [],
+}) {
+    ReactDOM.renderToStaticMarkup(
+        <Html options={options} optionsJson={optionsJson} styles={stylePaths} scripts={scriptPaths} />
+    );
     const helmet = Helmet.renderStatic();
 
     const head = helmet.title.toString() + helmetToString(helmet.meta) + helmetToString(helmet.link) + style;

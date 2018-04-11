@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 
 const Html = ({options, optionsJson, styles, scripts}) => {
     const prefix = __DEV__ ? '/build/' : options.basePath;
-    const jepaOptions = `window.__JEPA_OPTIONS = ${optionsJson};`;
+    const jepaOptions = `window.__JEPA_OPTIONS__ = ${optionsJson};`;
 
     return (
         <Helmet>
