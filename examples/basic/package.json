@@ -13,6 +13,5 @@
     "jepa": "../..",
     "react": "^16.3.1",
     "react-dom": "^16.3.1"
-  },
-  "devDependencies": {}
+  }
 }
