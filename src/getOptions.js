@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import devalue from 'devalue';
 
 const defaultOptions = {
     host: '0.0.0.0',
@@ -7,9 +8,11 @@ const defaultOptions = {
     compress: !__DEV__,
     basePath: '/',
 };
-let options = null;
 
-export default async function () {
+let options = null;
+let optionsJson = null;
+
+export default async function getOptions() {
     if (options === null) {
         let jepaOptions;
 
@@ -23,7 +26,8 @@ export default async function () {
         }
 
         options = _.merge({}, defaultOptions, jepaOptions);
+        optionsJson = devalue(_.pick(opttion, ['basePath']));
     }
 
-    return options;
+    return {options, optionsJson};
 }

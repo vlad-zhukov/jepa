@@ -37,6 +37,7 @@
     "circular-dependency-plugin": "^4.4.0",
     "compression": "^1.7.2",
     "copy-webpack-plugin": "^4.5.1",
+    "devalue": "^1.0.3",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "fs-extra": "^5.0.0",

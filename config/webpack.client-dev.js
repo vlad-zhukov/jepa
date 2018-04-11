@@ -22,7 +22,7 @@ export default async () => {
     const context = process.cwd();
     const jepaRoot = path.resolve(__dirname, '..');
     const config = await getConfig();
-    const options = await getOptions();
+    const {options} = await getOptions();
 
     return createConfig([
         defineConstants({

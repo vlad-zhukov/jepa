@@ -23,7 +23,7 @@ function renderDocument({options, renderedCore = '', style = '', stylePaths = []
 let loadablePreloaded = false;
 
 export default async function render(locals) {
-    const options = await getOptions();
+    const {options, optionsJson} = await getOptions();
 
     if (!__DEV__) {
         const renderServerWrapper = (await import('src/server/renderServerWrapper')).default;
@@ -51,9 +51,9 @@ export default async function render(locals) {
         const scriptPaths = [...meta.vendor, ...chunkScripts, ...meta.app.filter(file => file.endsWith('.js'))];
         const stylePaths = meta.app.filter(file => file.endsWith('.css'));
 
-        return renderDocument({options, renderedCore, style, stylePaths, script, scriptPaths});
+        return renderDocument({options, optionsJson, renderedCore, style, stylePaths, script, scriptPaths});
     }
 
     const scriptPaths = ['js/vendor.js', 'js/app.js'];
-    return renderDocument({options, scriptPaths});
+    return renderDocument({options, optionsJson, scriptPaths});
 }

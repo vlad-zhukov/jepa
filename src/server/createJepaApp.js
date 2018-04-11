@@ -40,7 +40,7 @@ export default async function createJepaApp() {
 
     // start
 
-    const options = await getOptions();
+    const {options} = await getOptions();
 
     if (typeof options.routes === 'function') {
         const routes = await options.routes();

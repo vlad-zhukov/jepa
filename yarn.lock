@@ -2148,6 +2148,10 @@ detect-port-alt@1.1.6:
     address "^1.0.1"
     debug "^2.6.0"
 
+devalue@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/devalue/-/devalue-1.0.3.tgz#87bc64409db987eecd36125945c78c17ea109478"
+
 diffie-hellman@^5.0.0:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/diffie-hellman/-/diffie-hellman-5.0.2.tgz#b5835739270cfe26acf632099fded2a07f209e5e"
