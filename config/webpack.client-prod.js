@@ -58,7 +58,7 @@ export default async () => {
 
         setOutput({
             filename: 'useless/[name].js',
-            chunkFilename: basePath + '__static/js/chunk.[chunkhash].js',
+            chunkFilename: `${options.basePath}/__static/js/chunk.[chunkhash].js`,
             path: path.resolve(context, '.jepa/prod/'),
             pathinfo: false,
         }),
