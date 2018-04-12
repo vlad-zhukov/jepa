@@ -65,11 +65,11 @@ export default async function createJepaApp() {
         }
     });
 
-    const routerUseArgs = [options.basePath, appRouter];
-
+    const routerUseArgs = [options.basePath];
     if (typeof options.getRouter === 'function') {
         routerUseArgs.push(await options.getRouter());
     }
+    routerUseArgs.push(appRouter);
 
     app.use(...routerUseArgs);
 

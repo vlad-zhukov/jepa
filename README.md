@@ -55,7 +55,7 @@ You can optionally replace the following files:
 *   `clientDevServerPort` _(Number)_: Defaults to `3001`.
 *   `basePath` _(String)_: The base URL the app will be mounted at.
     Useful when your app is served behind a proxy. Defaults to `/`.
-*   `router` _(AsyncFunction)_: An async function that returns an
+*   `getRouter` _(AsyncFunction)_: An async function that returns an
     `express` router.
 *   `compress` _(Boolean|Object)_: Set this to `true` or object with
     [`compression`](https://github.com/expressjs/compression) options
