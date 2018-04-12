@@ -12,10 +12,6 @@ import getOptions from '../getOptions';
 
 export default async function createJepaApp() {
     const {options} = await getOptions();
-    let basePath = options.basePath.substr(1);
-    if (basePath.length > 0) {
-        basePath += '/';
-    }
 
     // init
 
@@ -34,7 +30,7 @@ export default async function createJepaApp() {
         await devServerProxy(app);
     }
     else {
-        app.use(`${options.basePath}/__static`, express.static(`${basePath}__static/`, {index: false}));
+        app.use(`${options.basePath}/__static`, express.static(`${options.basePathRel}__static/`, {index: false}));
         await serveFavicon(app);
     }
 

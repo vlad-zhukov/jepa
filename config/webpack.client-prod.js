@@ -31,11 +31,6 @@ export default async () => {
     const jepaRoot = path.resolve(__dirname, '..');
     const staticDirExists = await fs.pathExists('./src/client/static/');
 
-    let basePath = options.basePath.substr(1);
-    if (basePath.length > 0) {
-        basePath += '/';
-    }
-
     return createConfig([
         defineConstants({
             'process.env.NODE_ENV': 'production',
@@ -51,7 +46,8 @@ export default async () => {
 
         setOutput({
             filename: 'useless/[name].js',
-            chunkFilename: `${basePath}__static/js/chunk.[chunkhash].js`,
+            chunkFilename: `${options.basePathRel}__static/js/chunk.[chunkhash].js`,
+            publicPath: '/',
             path: path.resolve(context, '.jepa/prod/'),
             pathinfo: false,
         }),
@@ -99,10 +95,10 @@ export default async () => {
                 }),
                 config.postcss && postcss(config.postcss),
                 extractText({
-                    filename: `${basePath}__static/css/[contenthash:20].css`,
+                    filename: `${options.basePathRel}__static/css/[contenthash:20].css`,
                     allChunks: true,
                     ignoreOrder: true,
-                    publicPath: `${basePath}__static/css/`,
+                    publicPath: `${options.basePathRel}__static/css/`,
                 }),
             ].filter(Boolean)
         ),
@@ -131,14 +127,14 @@ export default async () => {
                         {
                             context,
                             from: './src/client/static/',
-                            to: `./${basePath}__static/`,
+                            to: `./${options.basePathRel}__static/`,
                         },
                     ]),
 
                 new webpack.optimize.CommonsChunkPlugin({
                     names: ['app', 'vendor'],
                     chunks: ['app'],
-                    filename: `${basePath}__static/js/[name].[chunkhash].js`,
+                    filename: `${options.basePathRel}__static/js/[name].[chunkhash].js`,
                     minChunks: Infinity,
                 }),
 

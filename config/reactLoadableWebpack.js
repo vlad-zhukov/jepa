@@ -9,11 +9,11 @@ function buildManifest(compiler, compilation) {
 
     compilation.chunks.forEach((chunk) => {
         chunk.files.forEach((file) => {
-            chunk.forEachModule(({id, libIdent, rawRequest}) => {
-                const name = typeof libIdent === 'function' ? libIdent({context}) : null;
+            chunk.forEachModule((module) => {
+                const name = typeof module.libIdent === 'function' ? module.libIdent({context}) : null;
                 if (name && !/(node_modules|webpack|multi)/.test(name) && /.js$/.test(name)) {
                     // console.log(Object.keys(module))
-                    manifest[rawRequest] = {id, name, file};
+                    manifest[module.rawRequest] = {id: module.id, name, file};
                 }
             });
         });
