@@ -34,14 +34,7 @@ export default async () => {
         }),
 
         entryPoint({
-            vendor: [
-                '@babel/polyfill',
-                'react',
-                'react-dom',
-                'react-helmet',
-                'react-router',
-                'react-router-dom',
-            ],
+            vendor: ['@babel/polyfill', 'react', 'react-dom', 'react-helmet', 'react-router', 'react-router-dom'],
             app: [
                 'jepa/src/client/index.js',
                 'webpack/hot/dev-server',
@@ -52,7 +45,7 @@ export default async () => {
         setOutput({
             filename: 'js/[name].js',
             chunkFilename: 'js/chunk.[name].js',
-            publicPath: options.basePath + '/__static/',
+            publicPath: `${options.basePath}/__static/`,
             pathinfo: true,
         }),
 
@@ -67,7 +60,7 @@ export default async () => {
         resolve({
             mainFields: ['module', 'jsnext:main', 'main'],
             // mainFields: ['module', 'jsnext:main', 'browser', 'main'],
-            modules: [context, jepaRoot, "node_modules"],
+            modules: [context, jepaRoot, 'node_modules'],
         }),
 
         parser({
@@ -79,14 +72,12 @@ export default async () => {
             requireEnsure: false,
         }),
 
-        match(['*.js', '*.mjs'], [
-            babel({...babelConfig('development'), cacheDirectory: true}),
-        ]),
+        match(['*.js', '*.mjs'], [babel({...babelConfig('development'), cacheDirectory: true})]),
 
         match('*.css', [css(), config.postcss && postcss(config.postcss)].filter(Boolean)),
 
         devServer({
-            publicPath: options.basePath + '/__static/',
+            publicPath: `${options.basePath}/__static/`,
             disableHostCheck: true,
             clientLogLevel: 'error',
             // Enable gzip compression of generated files.
@@ -104,7 +95,7 @@ export default async () => {
             noInfo: true,
             overlay: true,
             port: options.clientDevServerPort,
-            //quiet: true,
+            // quiet: true,
             watchOptions: {
                 ignored: /node_modules/,
             },
@@ -122,6 +113,4 @@ export default async () => {
             new CircularDependencyPlugin({exclude: /node_modules\/(?!jepa).*/}),
         ]),
     ]);
-
-}
-
+};

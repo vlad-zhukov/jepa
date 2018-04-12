@@ -45,14 +45,7 @@ export default async () => {
         }),
 
         entryPoint({
-            vendor: [
-                '@babel/polyfill',
-                'react',
-                'react-dom',
-                'react-helmet',
-                'react-router',
-                'react-router-dom',
-            ],
+            vendor: ['@babel/polyfill', 'react', 'react-dom', 'react-helmet', 'react-router', 'react-router-dom'],
             app: 'jepa/src/client/index.js',
         }),
 
@@ -73,7 +66,7 @@ export default async () => {
 
         resolve({
             mainFields: ['module', 'jsnext:main', 'main'],
-            modules: [context, jepaRoot, "node_modules"],
+            modules: [context, jepaRoot, 'node_modules'],
         }),
 
         parser({
@@ -85,23 +78,34 @@ export default async () => {
             requireEnsure: false,
         }),
 
-        match(['*.js', '*.mjs'], [
-            thread(),
-            babel({
-                ...babelConfig('production'),
-                cacheDirectory: true,
-                compact: false,
-            }),
-        ]),
+        match(
+            ['*.js', '*.mjs'],
+            [
+                thread(),
+                babel({
+                    ...babelConfig('production'),
+                    cacheDirectory: true,
+                    compact: false,
+                }),
+            ]
+        ),
 
-        match('*.css', [
-            css({
-                styleLoader: false,
-                minimize: true,
-            }),
-            config.postcss && postcss(config.postcss),
-            extractText({filename: basePath + '__static/css/[contenthash:20].css', allChunks: true, ignoreOrder: true, publicPath: basePath + '__static/css/'}),
-        ].filter(Boolean)),
+        match(
+            '*.css',
+            [
+                css({
+                    styleLoader: false,
+                    minimize: true,
+                }),
+                config.postcss && postcss(config.postcss),
+                extractText({
+                    filename: `${basePath}__static/css/[contenthash:20].css`,
+                    allChunks: true,
+                    ignoreOrder: true,
+                    publicPath: `${basePath}__static/css/`,
+                }),
+            ].filter(Boolean)
+        ),
 
         uglify({
             uglifyOptions: {
@@ -120,60 +124,67 @@ export default async () => {
             },
         }),
 
-        addPlugins([
-            staticDirExists && new CopyPlugin([{
-                context,
-                from: './src/client/static/',
-                to: `./${basePath}__static/`,
-            }]),
+        addPlugins(
+            [
+                staticDirExists &&
+                    new CopyPlugin([
+                        {
+                            context,
+                            from: './src/client/static/',
+                            to: `./${basePath}__static/`,
+                        },
+                    ]),
 
-            new webpack.optimize.CommonsChunkPlugin({
-                names: ['app', 'vendor'],
-                chunks: ['app'],
-                filename: basePath + '__static/js/[name].[chunkhash].js',
-                minChunks: Infinity,
-            }),
+                new webpack.optimize.CommonsChunkPlugin({
+                    names: ['app', 'vendor'],
+                    chunks: ['app'],
+                    filename: `${basePath}__static/js/[name].[chunkhash].js`,
+                    minChunks: Infinity,
+                }),
 
-            new ReactLoadablePlugin({
-                filename: './.jepa/prod/react-loadable.json',
-            }),
+                new ReactLoadablePlugin({
+                    filename: './.jepa/prod/react-loadable.json',
+                }),
 
-            new StatsWriterPlugin({
-                filename: 'meta.json',
-                fields: ['chunks', 'modules'],
-                transform: (data) => {
-                    const result = {
-                        __css: [],
-                        __fonts: [],
-                    };
+                new StatsWriterPlugin({
+                    filename: 'meta.json',
+                    fields: ['chunks', 'modules'],
+                    transform: (data) => {
+                        const result = {
+                            __css: [],
+                            __fonts: [],
+                        };
 
-                    for (const module of data.modules) {
-                        if (!/(node_modules|webpack|multi)/.test(module.name) && module.assets.length > 0) {
-                            result.__css.push(...module.assets.filter(filename => /\.css$/.test(filename)));
-                            result.__fonts.push(...module.assets.filter(filename => /\.woff2?$/.test(filename)));
-                        }
-                    }
-
-                    for (const chunk of data.chunks) {
-                        const name = chunk.names.join(' ');
-
-                        if (chunk.id in result) {
-                            result[chunk.id] = chunk.files;
-                            if (name) {
-                                result[name] = result[chunk.id];
-                                delete result[chunk.id];
+                        // eslint-disable-next-line no-restricted-syntax
+                        for (const module of data.modules) {
+                            if (!/(node_modules|webpack|multi)/.test(module.name) && module.assets.length > 0) {
+                                result.__css.push(...module.assets.filter(filename => /\.css$/.test(filename)));
+                                result.__fonts.push(...module.assets.filter(filename => /\.woff2?$/.test(filename)));
                             }
                         }
-                        else if (name && name !== '_rest') {
-                            result[name] = chunk.files;
+
+                        // eslint-disable-next-line no-restricted-syntax
+                        for (const chunk of data.chunks) {
+                            const name = chunk.names.join(' ');
+
+                            if (chunk.id in result) {
+                                result[chunk.id] = chunk.files;
+                                if (name) {
+                                    result[name] = result[chunk.id];
+                                    delete result[chunk.id];
+                                }
+                            }
+                            else if (name && name !== '_rest') {
+                                result[name] = chunk.files;
+                            }
                         }
-                    }
 
-                    return JSON.stringify(result, null, 2);
-                },
-            }),
+                        return JSON.stringify(result, null, 2);
+                    },
+                }),
 
-            new CircularDependencyPlugin({exclude: /node_modules\/(?!jepa).*/}),
-        ].filter(Boolean)),
+                new CircularDependencyPlugin({exclude: /node_modules\/(?!jepa).*/}),
+            ].filter(Boolean)
+        ),
     ]);
-}
+};

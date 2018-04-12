@@ -1,18 +1,19 @@
+/* eslint-disable promise/prefer-await-to-callbacks */
+
 import fs from 'fs';
 import path from 'path';
 
 function buildManifest(compiler, compilation) {
-    const context = compiler.options.context;
+    const {context} = compiler.options;
     const manifest = {};
 
-    compilation.chunks.forEach(chunk => {
-        chunk.files.forEach(file => {
-            chunk.forEachModule(module => {
-                const id = module.id;
-                const name = typeof module.libIdent === 'function' ? module.libIdent({context}) : null;
+    compilation.chunks.forEach((chunk) => {
+        chunk.files.forEach((file) => {
+            chunk.forEachModule(({id, libIdent, rawRequest}) => {
+                const name = typeof libIdent === 'function' ? libIdent({context}) : null;
                 if (name && !/(node_modules|webpack|multi)/.test(name) && /.js$/.test(name)) {
                     // console.log(Object.keys(module))
-                    manifest[module.rawRequest] = {id, name, file};
+                    manifest[rawRequest] = {id, name, file};
                 }
             });
         });
@@ -33,7 +34,8 @@ export default class ReactLoadablePlugin {
             const outputDirectory = path.dirname(this.filename);
             try {
                 fs.mkdirSync(outputDirectory);
-            } catch (err) {
+            }
+            catch (err) {
                 if (err.code !== 'EEXIST') {
                     throw err;
                 }

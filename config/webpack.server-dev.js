@@ -53,7 +53,7 @@ export default async () => {
 
         resolve({
             mainFields: ['module', 'jsnext:main', 'main'],
-            modules: [context, jepaRoot, "node_modules"],
+            modules: [context, jepaRoot, 'node_modules'],
         }),
 
         parser({
@@ -65,12 +65,8 @@ export default async () => {
             requireEnsure: false,
         }),
 
-        match(['*.js', '*.mjs'], [
-            babel({...babelConfig('server'), cacheDirectory: true}),
-        ]),
+        match(['*.js', '*.mjs'], [babel({...babelConfig('server'), cacheDirectory: true})]),
 
-        addPlugins([
-            new CircularDependencyPlugin({exclude: /node_modules\/(?!jepa).*/}),
-        ]),
+        addPlugins([new CircularDependencyPlugin({exclude: /node_modules\/(?!jepa).*/})]),
     ]);
-}
+};

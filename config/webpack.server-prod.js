@@ -65,7 +65,7 @@ export default async () => {
 
         resolve({
             mainFields: ['module', 'jsnext:main', 'main'],
-            modules: [context, jepaRoot, "node_modules"],
+            modules: [context, jepaRoot, 'node_modules'],
         }),
 
         parser({
@@ -77,28 +77,34 @@ export default async () => {
             requireEnsure: false,
         }),
 
-        match(['*.js', '*.mjs'], [
-            thread(),
-            babel({
-                ...babelConfig('server'),
-                cacheDirectory: true,
-                compact: false,
-            }),
-        ]),
+        match(
+            ['*.js', '*.mjs'],
+            [
+                thread(),
+                babel({
+                    ...babelConfig('server'),
+                    cacheDirectory: true,
+                    compact: false,
+                }),
+            ]
+        ),
 
-        match('*.css', [
-            css({
-                styleLoader: false,
-                minimize: true,
-            }),
-            config.postcss && postcss(config.postcss),
-            extractText({
-                filename: basePath + '__static/css/[contenthash:20].css',
-                allChunks: true,
-                ignoreOrder: true,
-                disable: true,
-            }),
-        ].filter(Boolean)),
+        match(
+            '*.css',
+            [
+                css({
+                    styleLoader: false,
+                    minimize: true,
+                }),
+                config.postcss && postcss(config.postcss),
+                extractText({
+                    filename: `${basePath}__static/css/[contenthash:20].css`,
+                    allChunks: true,
+                    ignoreOrder: true,
+                    disable: true,
+                }),
+            ].filter(Boolean)
+        ),
 
         uglify({
             uglifyOptions: {
@@ -120,8 +126,6 @@ export default async () => {
             },
         }),
 
-        addPlugins([
-            new CircularDependencyPlugin({exclude: /node_modules\/(?!jepa).*/}),
-        ]),
+        addPlugins([new CircularDependencyPlugin({exclude: /node_modules\/(?!jepa).*/})]),
     ]);
-}
+};
