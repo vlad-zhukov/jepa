@@ -3,5 +3,10 @@ import getOptions from '../../getOptions';
 
 export default async function devServerProxy(app) {
     const {options} = await getOptions();
-    app.use(proxy('/build', {target: `http://${options.host}:${options.clientDevServerPort}/`, changeOrigin: true}));
+    app.use(
+        proxy(`${options.basePath}/__static`, {
+            target: `http://${options.host}:${options.clientDevServerPort}/`,
+            changeOrigin: true,
+        })
+    );
 }

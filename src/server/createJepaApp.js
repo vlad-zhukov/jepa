@@ -7,11 +7,15 @@ import compress from './middleware/compress';
 import serveFavicon from './middleware/serveFavicon';
 import robotsTxt from './middleware/robotsTxt';
 import manifestJson from './middleware/manifestJson';
-import renderApp from './middleware/renderApp';
+import render from './render';
 import getOptions from '../getOptions';
 
 export default async function createJepaApp() {
     const {options} = await getOptions();
+    let basePath = options.basePath.substr(1);
+    if (basePath.length > 0) {
+        basePath += '/';
+    }
 
     // init
 
@@ -30,7 +34,7 @@ export default async function createJepaApp() {
         await devServerProxy(app);
     }
     else {
-        app.use('/static', express.static('static/', {index: false}));
+        app.use(`${options.basePath}/__static`, express.static(`${basePath}__static/`, {index: false}));
         await serveFavicon(app);
     }
 
@@ -42,12 +46,32 @@ export default async function createJepaApp() {
 
     // start
 
-    if (typeof options.routes === 'function') {
-        const routes = await options.routes();
-        routes(app);
+    const appRouter = new express.Router();
+    // Игнорируем всё, что начинается на __static или содержит точку
+    appRouter.route(/^\/(?!__static|.*\.).*$/i).get(async (req, res, next) => {
+        res.locals.location = req.url;
+
+        try {
+            // Render the view
+            const result = await render(res.locals);
+            res
+                .type('html')
+                .status(200)
+                .send(result);
+        }
+        catch (e) {
+            console.error(e);
+            next();
+        }
+    });
+
+    const routerUseArgs = [options.basePath, appRouter];
+
+    if (typeof options.getRouter === 'function') {
+        routerUseArgs.push(await options.getRouter());
     }
 
-    renderApp(app);
+    app.use(...routerUseArgs);
 
     app.listen(options.port, options.host, (error) => {
         if (error) {

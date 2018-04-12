@@ -19,10 +19,11 @@ import getConfig from './getConfig';
 import getOptions from '../src/getOptions';
 
 export default async () => {
-    const context = process.cwd();
-    const jepaRoot = path.resolve(__dirname, '..');
     const config = await getConfig();
     const {options} = await getOptions();
+
+    const context = process.cwd();
+    const jepaRoot = path.resolve(__dirname, '..');
 
     return createConfig([
         defineConstants({
@@ -51,7 +52,7 @@ export default async () => {
         setOutput({
             filename: 'js/[name].js',
             chunkFilename: 'js/chunk.[name].js',
-            publicPath: '/build/',
+            publicPath: options.basePath + '/__static/',
             pathinfo: true,
         }),
 
@@ -85,7 +86,7 @@ export default async () => {
         match('*.css', [css(), config.postcss && postcss(config.postcss)].filter(Boolean)),
 
         devServer({
-            publicPath: '/build/',
+            publicPath: options.basePath + '/__static/',
             disableHostCheck: true,
             clientLogLevel: 'error',
             // Enable gzip compression of generated files.

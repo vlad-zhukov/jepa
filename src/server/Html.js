@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 
 const Html = ({options, optionsJson, styles, scripts}) => {
-    const prefix = __DEV__ ? '/build/' : options.basePath;
+    const prefix = __DEV__ ? `${options.basePath}/__static` : '';
     const jepaOptions = `window.__JEPA_OPTIONS__ = ${optionsJson};`;
 
     return (
@@ -12,10 +12,12 @@ const Html = ({options, optionsJson, styles, scripts}) => {
             <meta charSet="utf-8" />
             <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
-            {options.manifestJson && <link rel="manifest" type="application/manifest+json" href="/manifest.json" />}
+            {options.manifestJson && (
+                <link rel="manifest" type="application/manifest+json" href={`${options.basePath}/manifest.json`} />
+            )}
             <script id="jepa-options">{jepaOptions}</script>
-            {styles.map(style => <link rel="stylesheet" type="text/css" href={`${prefix}${style}`} key={style} />)}
-            {scripts.map(script => <script defer src={`${prefix}${script}`} key={script} />)}
+            {styles.map(style => <link rel="stylesheet" type="text/css" href={`${prefix}/${style}`} key={style} />)}
+            {scripts.map(script => <script defer src={`${prefix}/${script}`} key={script} />)}
         </Helmet>
     );
 };

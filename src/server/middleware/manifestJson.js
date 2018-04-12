@@ -8,7 +8,7 @@ export default async function manifestJson(app) {
             ...options.manifestJson,
         };
 
-        app.use('/manifest.json', (req, res) => {
+        app.use(`${options.basePath}/manifest.json`, (req, res) => {
             res.json(manifest);
         });
     }

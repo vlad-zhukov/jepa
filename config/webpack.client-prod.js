@@ -21,12 +21,20 @@ import CircularDependencyPlugin from 'circular-dependency-plugin';
 import ReactLoadablePlugin from './reactLoadableWebpack';
 import babelConfig from './babelConfig';
 import getConfig from './getConfig';
+import getOptions from '../src/getOptions';
 
 export default async () => {
+    const config = await getConfig();
+    const {options} = await getOptions();
+
     const context = process.cwd();
     const jepaRoot = path.resolve(__dirname, '..');
-    const config = await getConfig();
     const staticDirExists = await fs.pathExists('./src/client/static/');
+
+    let basePath = options.basePath.substr(1);
+    if (basePath.length > 0) {
+        basePath += '/';
+    }
 
     return createConfig([
         defineConstants({
@@ -50,7 +58,7 @@ export default async () => {
 
         setOutput({
             filename: 'useless/[name].js',
-            chunkFilename: 'static/js/chunk.[chunkhash].js',
+            chunkFilename: basePath + '__static/js/chunk.[chunkhash].js',
             path: path.resolve(context, '.jepa/prod/'),
             pathinfo: false,
         }),
@@ -92,7 +100,7 @@ export default async () => {
                 minimize: true,
             }),
             config.postcss && postcss(config.postcss),
-            extractText({filename: 'static/css/[contenthash:20].css', allChunks: true, ignoreOrder: true, publicPath: 'static/css/'}),
+            extractText({filename: basePath + '__static/css/[contenthash:20].css', allChunks: true, ignoreOrder: true, publicPath: basePath + '__static/css/'}),
         ].filter(Boolean)),
 
         uglify({
@@ -116,13 +124,13 @@ export default async () => {
             staticDirExists && new CopyPlugin([{
                 context,
                 from: './src/client/static/',
-                to: './static/',
+                to: `./${basePath}__static/`,
             }]),
 
             new webpack.optimize.CommonsChunkPlugin({
                 names: ['app', 'vendor'],
                 chunks: ['app'],
-                filename: 'static/js/[name].[chunkhash].js',
+                filename: basePath + '__static/js/[name].[chunkhash].js',
                 minChunks: Infinity,
             }),
 

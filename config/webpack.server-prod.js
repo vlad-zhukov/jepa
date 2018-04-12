@@ -18,11 +18,19 @@ import {nodeExternals} from 'webpack-universal-helpers';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import babelConfig from './babelConfig';
 import getConfig from './getConfig';
+import getOptions from '../src/getOptions';
 
 export default async () => {
+    const config = await getConfig();
+    const {options} = await getOptions();
+
     const context = process.cwd();
     const jepaRoot = path.resolve(__dirname, '..');
-    const config = await getConfig();
+
+    let basePath = options.basePath.substr(1);
+    if (basePath.length > 0) {
+        basePath += '/';
+    }
 
     const pathToPackageJson = path.resolve(context, 'src/package.json');
     const hasPackageJson = await fs.pathExists(pathToPackageJson);
@@ -85,7 +93,7 @@ export default async () => {
             }),
             config.postcss && postcss(config.postcss),
             extractText({
-                filename: 'static/css/[contenthash:20].css',
+                filename: basePath + '__static/css/[contenthash:20].css',
                 allChunks: true,
                 ignoreOrder: true,
                 disable: true,
