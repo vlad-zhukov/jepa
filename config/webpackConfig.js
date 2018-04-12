@@ -1,6 +1,6 @@
 import getConfig from './getConfig'
 
-export default async ({target, env}) => {
+export default async function webpackConfig({target, env}) {
     const {modifyWebpack} = await getConfig();
 
     if (target === 'node') {

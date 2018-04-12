@@ -1,4 +1,4 @@
-module.exports = (env) => {
+module.exports = function babelConfig(env) {
     const presets = ['@babel/preset-react', '@babel/preset-stage-1'];
     const plugins = [];
 
