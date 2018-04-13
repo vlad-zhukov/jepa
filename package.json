@@ -1,10 +1,9 @@
 {
   "name": "jepa",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "repository": "https://github.com/vlad-zhukov/jepa.git",
   "author": "Vlad Zhukov <work4vlad@gmail.com>",
   "license": "MIT",
-  "main": "./server.js",
   "bin": {
     "jepa": "./bin/jepa.js"
   },
@@ -72,10 +71,11 @@
   },
   "files": [
     "bin/",
-    "config/",
+    "configs/",
     "scripts/",
     "src/",
-    "asyncComponent.js",
-    "server.js"
+    "client.js",
+    "server.js",
+    "universal.js"
   ]
 }

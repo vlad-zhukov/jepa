@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import formatWebpackMessages from 'react-dev-utils/formatWebpackMessages';
 import chalk from 'chalk';
 import {cleanDir, installDeps} from './_core';
-import webpackConfig from '../config/webpackConfig';
+import webpackConfig from '../configs/webpackConfig';
 
 // First compile the client. We need it to properly output assets.json (asset
 // manifest file with the correct hashes on file names BEFORE we can start

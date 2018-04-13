@@ -2,7 +2,7 @@ import webpack from 'webpack';
 import {watchServer} from 'webpack-universal-helpers';
 import DevServer from 'webpack-dev-server';
 import {cleanDir, installDeps} from './_core';
-import webpackConfig from '../config/webpackConfig';
+import webpackConfig from '../configs/webpackConfig';
 import getOptions from '../src/getOptions';
 
 async function start() {
