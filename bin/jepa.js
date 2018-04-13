@@ -9,7 +9,7 @@ function runScript(nodeEnv) {
     const env = Object.assign({}, process.env, {NODE_ENV: nodeEnv});
     const result = spawn.sync(
         'node',
-        ['-r', require.resolve('../config/setGlobals.js'), require.resolve(`../scripts/${script}`)].concat(args),
+        ['-r', require.resolve('../configs/setGlobals.js'), require.resolve(`../scripts/${script}`)].concat(args),
         {stdio: 'inherit', env}
     );
     if (result.signal) {
