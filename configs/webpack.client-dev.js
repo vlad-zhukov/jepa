@@ -16,11 +16,10 @@ import {parser, babel, postcss} from 'webpack-blocks-more';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import babelConfig from './babelConfig';
 import getConfig from './getConfig';
-import getOptions from '../src/getOptions';
+import {options} from '../src/options';
 
 export default async () => {
     const config = await getConfig();
-    const {options} = await getOptions();
 
     const context = process.cwd();
     const jepaRoot = path.resolve(__dirname, '..');

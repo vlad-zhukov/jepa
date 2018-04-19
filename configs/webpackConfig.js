@@ -1,9 +1,8 @@
 import getConfig from './getConfig';
-import getOptions from '../src/getOptions';
+import {options} from '../src/options';
 
 export default async function webpackConfig({target, env}) {
     const {modifyWebpack} = await getConfig();
-    const {options} = await getOptions();
 
     if (target === 'node') {
         if (env === 'dev') {

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import {options, optionsJson} from '../options';
 
-const Html = ({options, optionsJson, styles, scripts}) => {
+const Html = ({styles, scripts}) => {
     const prefix = __DEV__ ? `${options.basePath}/__static` : '';
     const jepaOptions = `window.__JEPA_OPTIONS__ = ${optionsJson};`;
 
@@ -23,8 +24,6 @@ const Html = ({options, optionsJson, styles, scripts}) => {
 };
 
 Html.propTypes = {
-    options: PropTypes.object().isRequired, // eslint-disable-line react/forbid-prop-types
-    optionsJson: PropTypes.string().isRequired,
     styles: PropTypes.arrayOf(PropTypes.string).isRequired,
     scripts: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

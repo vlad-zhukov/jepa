@@ -1,7 +1,6 @@
-import getOptions from '../../getOptions';
+import {options} from '../../options';
 
 export default async function manifestJson(app) {
-    const {options} = await getOptions();
     if (options.manifestJson) {
         const manifest = {
             name: options.name,

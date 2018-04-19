@@ -4,24 +4,14 @@ import {StaticRouter} from 'react-router-dom';
 import Loadable from 'react-loadable';
 import Helmet from 'react-helmet';
 import Html from './Html';
-import getOptions from '../getOptions';
+import {options} from '../options';
 
 function helmetToString(value) {
     return value.toString().replace(/data-react-helmet="true" /g, '');
 }
 
-function renderDocument({
-    options,
-    optionsJson,
-    renderedCore = '',
-    style = '',
-    stylePaths = [],
-    script = '',
-    scriptPaths = [],
-}) {
-    ReactDOM.renderToStaticMarkup(
-        <Html options={options} optionsJson={optionsJson} styles={stylePaths} scripts={scriptPaths} />
-    );
+function renderDocument({renderedCore = '', style = '', stylePaths = [], script = '', scriptPaths = []}) {
+    ReactDOM.renderToStaticMarkup(<Html styles={stylePaths} scripts={scriptPaths} />);
     const helmet = Helmet.renderStatic();
 
     const head = helmet.title.toString() + helmetToString(helmet.meta) + helmetToString(helmet.link) + style;
@@ -33,8 +23,6 @@ function renderDocument({
 let loadablePreloaded = false;
 
 export default async function render(locals) {
-    const {options, optionsJson} = await getOptions();
-
     if (!__DEV__) {
         const renderServerWrapper = (await import('src/server/renderServerWrapper')).default;
         const App = (await import('src/universal/App')).default;
@@ -61,9 +49,9 @@ export default async function render(locals) {
         const scriptPaths = [...meta.vendor, ...chunkScripts, ...meta.app.filter(file => file.endsWith('.js'))];
         const stylePaths = meta.app.filter(file => file.endsWith('.css'));
 
-        return renderDocument({options, optionsJson, renderedCore, style, stylePaths, script, scriptPaths});
+        return renderDocument({renderedCore, style, stylePaths, script, scriptPaths});
     }
 
     const scriptPaths = ['js/vendor.js', 'js/app.js'];
-    return renderDocument({options, optionsJson, scriptPaths});
+    return renderDocument({scriptPaths});
 }

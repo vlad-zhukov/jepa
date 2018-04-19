@@ -3,11 +3,9 @@ import {watchServer} from 'webpack-universal-helpers';
 import DevServer from 'webpack-dev-server';
 import {cleanDir, installDeps} from './_core';
 import webpackConfig from '../configs/webpackConfig';
-import getOptions from '../src/getOptions';
+import {options} from '../src/options';
 
 async function start() {
-    const {options} = await getOptions();
-
     await cleanDir();
     await installDeps();
 

@@ -8,10 +8,9 @@ import serveFavicon from './middleware/serveFavicon';
 import robotsTxt from './middleware/robotsTxt';
 import manifestJson from './middleware/manifestJson';
 import render from './render';
-import getOptions from '../getOptions';
+import {options} from '../options';
 
 export default async function createJepaApp() {
-    const {options} = await getOptions();
 
     // init
 
