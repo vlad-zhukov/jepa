@@ -11,7 +11,6 @@ import render from './render';
 import {options} from '../options';
 
 export default async function createJepaApp() {
-
     // init
 
     const app = express().disable('x-powered-by');
