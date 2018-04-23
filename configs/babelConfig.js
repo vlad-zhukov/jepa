@@ -1,5 +1,5 @@
 module.exports = function babelConfig(env) {
-    const presets = ['@babel/preset-react', '@babel/preset-stage-1'];
+    const presets = ['@babel/preset-react', ['@babel/preset-stage-1', {decoratorsLegacy: true}]];
     const plugins = [];
 
     if (env === 'server') {
