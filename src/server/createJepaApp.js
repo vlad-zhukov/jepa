@@ -28,7 +28,7 @@ export default async function createJepaApp() {
         await devServerProxy(app);
     }
     else {
-        app.use(`${options.basePath}/__static`, express.static(`${options.basePathRel}__static/`, {index: false}));
+        app.use(`${options.basePath}/__static`, express.static('__static/', {index: false}));
         await serveFavicon(app);
     }
 

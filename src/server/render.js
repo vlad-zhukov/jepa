@@ -14,7 +14,12 @@ function renderDocument({renderedCore = '', style = '', stylePaths = [], script 
     ReactDOM.renderToStaticMarkup(<Html styles={stylePaths} scripts={scriptPaths} />);
     const helmet = Helmet.renderStatic();
 
-    const head = helmet.title.toString() + helmetToString(helmet.meta) + helmetToString(helmet.link) + style;
+    const head =
+        helmet.title.toString() +
+        helmetToString(helmet.base) +
+        helmetToString(helmet.meta) +
+        helmetToString(helmet.link) +
+        style;
     const body = `<div id="react-app">${renderedCore}</div>${script}${helmetToString(helmet.script)}`;
 
     return `<!DOCTYPE html><html ${helmet.htmlAttributes.toString()}><head>${head}</head><body>${body}</body></html>`;

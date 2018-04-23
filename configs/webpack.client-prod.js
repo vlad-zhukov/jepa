@@ -21,7 +21,6 @@ import CircularDependencyPlugin from 'circular-dependency-plugin';
 import ReactLoadablePlugin from './reactLoadableWebpack';
 import babelConfig from './babelConfig';
 import getConfig from './getConfig';
-import {options} from '../src/options';
 
 export default async () => {
     const config = await getConfig();
@@ -45,7 +44,7 @@ export default async () => {
 
         setOutput({
             filename: 'useless/[name].js',
-            chunkFilename: `${options.basePathRel}__static/js/chunk.[chunkhash].js`,
+            chunkFilename: '__static/js/chunk.[chunkhash].js',
             publicPath: '/',
             path: path.resolve(context, '.jepa/prod/'),
             pathinfo: false,
@@ -94,10 +93,10 @@ export default async () => {
                 }),
                 config.postcss && postcss(config.postcss),
                 extractText({
-                    filename: `${options.basePathRel}__static/css/[contenthash:20].css`,
+                    filename: '__static/css/[contenthash:20].css',
                     allChunks: true,
                     ignoreOrder: true,
-                    publicPath: `${options.basePathRel}__static/css/`,
+                    publicPath: '__static/css/',
                 }),
             ].filter(Boolean)
         ),
@@ -126,14 +125,14 @@ export default async () => {
                         {
                             context,
                             from: './src/client/static/',
-                            to: `./${options.basePathRel}__static/`,
+                            to: './__static/',
                         },
                     ]),
 
                 new webpack.optimize.CommonsChunkPlugin({
                     names: ['app', 'vendor'],
                     chunks: ['app'],
-                    filename: `${options.basePathRel}__static/js/[name].[chunkhash].js`,
+                    filename: '__static/js/[name].[chunkhash].js',
                     minChunks: Infinity,
                 }),
 

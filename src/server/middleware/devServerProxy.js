@@ -6,6 +6,9 @@ export default async function devServerProxy(app) {
         proxy(`${options.basePath}/__static`, {
             target: `http://${options.host}:${options.clientDevServerPort}/`,
             changeOrigin: true,
+            pathRewrite: {
+                [`${options.basePath}/__static`]: '/__static',
+            },
         })
     );
 }
