@@ -44,7 +44,7 @@ export default async () => {
         setOutput({
             filename: 'js/[name].js',
             chunkFilename: 'js/chunk.[name].js',
-            publicPath: '/__static/',
+            publicPath: `${options.basePath}/__static/`,
             pathinfo: true,
         }),
 
@@ -76,7 +76,7 @@ export default async () => {
         match('*.css', [css(), config.postcss && postcss(config.postcss)].filter(Boolean)),
 
         devServer({
-            publicPath: '/__static/',
+            publicPath: `${options.basePath}/__static/`,
             disableHostCheck: true,
             clientLogLevel: 'error',
             // Enable gzip compression of generated files.

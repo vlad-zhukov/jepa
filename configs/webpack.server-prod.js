@@ -18,6 +18,7 @@ import {nodeExternals} from 'webpack-universal-helpers';
 import CircularDependencyPlugin from 'circular-dependency-plugin';
 import babelConfig from './babelConfig';
 import getConfig from './getConfig';
+import {options} from '../src/options';
 
 export default async () => {
     const config = await getConfig();
@@ -91,7 +92,7 @@ export default async () => {
                 }),
                 config.postcss && postcss(config.postcss),
                 extractText({
-                    filename: '__static/css/[contenthash:20].css',
+                    filename: `${options.basePathRel}__static/css/[contenthash:20].css`,
                     allChunks: true,
                     ignoreOrder: true,
                     disable: true,
