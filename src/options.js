@@ -1,6 +1,7 @@
 /* eslint-disable import/no-mutable-exports, global-require */
 
-import _ from 'lodash';
+import merge from 'lodash/merge';
+import pick from 'lodash/pick';
 import devalue from 'devalue';
 
 const defaultOptions = {
@@ -27,12 +28,12 @@ if (options === null) {
         jepaOptions = require(path.resolve(process.cwd(), './src/jepa.options.js')).default;
     }
 
-    options = _.merge({}, defaultOptions, jepaOptions);
+    options = merge({}, defaultOptions, jepaOptions);
     options.basePathRel = options.basePath.substr(1);
     if (options.basePathRel.length > 0) {
         options.basePathRel += '/';
     }
-    optionsJson = devalue(_.pick(options, ['name', 'basePath', 'basePathRel']));
+    optionsJson = devalue(pick(options, ['name', 'basePath', 'basePathRel']));
 }
 
 export {options, optionsJson};

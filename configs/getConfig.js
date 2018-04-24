@@ -1,5 +1,5 @@
 import path from 'path';
-import _ from 'lodash';
+import merge from 'lodash/merge';
 
 const defaultConfig = {
     modifyWebpack: ({webpackConfig}) => webpackConfig,
@@ -10,7 +10,7 @@ export default async function getConfig() {
     if (config === null) {
         const jepaConfig = (await import(path.resolve(process.cwd(), './src/jepa.config.js'))).default;
 
-        config = _.merge({}, defaultConfig, jepaConfig);
+        config = merge({}, defaultConfig, jepaConfig);
     }
 
     return config;
