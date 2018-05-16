@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-const spawn = require('react-dev-utils/crossSpawn');
+const execa = require('execa');
 
 const script = process.argv[2];
 const args = process.argv.slice(3);
 
 function runScript(nodeEnv) {
     const env = Object.assign({}, process.env, {NODE_ENV: nodeEnv});
-    const result = spawn.sync(
+    const result = execa.sync(
         'node',
         ['-r', require.resolve('../configs/setGlobals.js'), require.resolve(`../scripts/${script}`)].concat(args),
         {stdio: 'inherit', env}

@@ -9,7 +9,7 @@ async function start() {
     await cleanDir();
     await installDeps();
 
-    watchServer({
+    const server = watchServer({
         webpackConfig: await webpackConfig({target: 'node', env: 'dev'}),
         bundlePath: 'app.js',
         cwd: '.jepa/dev/',
@@ -21,7 +21,7 @@ async function start() {
     const clientCompiler = webpack(clientConfig);
     const clientDevServer = new DevServer(clientCompiler, clientConfig.devServer);
 
-    const server = clientDevServer.listen(options.clientDevServerPort, options.host, (error) => {
+    const clientServer = clientDevServer.listen(options.clientDevServerPort, options.host, (error) => {
         if (error) {
             console.error(error);
         }
@@ -29,7 +29,8 @@ async function start() {
 
     ['SIGINT', 'SIGTERM', 'SIGHUP', 'SIGQUIT', 'exit', 'uncaughtException'].forEach((sig) => {
         process.on(sig, () => {
-            server.close(() => {
+            server.stop();
+            clientServer.close(() => {
                 process.exit();
             });
         });
